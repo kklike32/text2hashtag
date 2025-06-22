@@ -1,0 +1,15 @@
+name: text2hashtag
+channels:
+  - pytorch
+  - defaults
+dependencies:
+  - python=3.10
+  - pytorch
+  - torchvision
+  - torchaudio
+  - pip
+  - pip:
+      - git+https://github.com/ml-explore/mlx-lm.git
+      - datasets
+      - accelerate
+

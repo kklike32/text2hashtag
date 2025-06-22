@@ -1,0 +1,14 @@
+# Python artifacts
+__pycache__/
+*.py[cod]
+*.so
+
+# Conda environment
+.env/
+.env.lock
+
+# MLX / adapters / model outputs
+mlx_model/
+adapters/
+fused_model/
+
