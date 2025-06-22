@@ -42,7 +42,7 @@ text2hashtag/
 
 ```bash
 # 1. Clone
-git clone https://github.com/<USERNAME>/text2hashtag.git
+git clone https://github.com/kklike32/text2hashtag.git
 cd text2hashtag
 
 # 2. Create Conda env
@@ -50,10 +50,7 @@ conda env create --file environment.yml
 conda activate text2hashtag
 
 # 3. Verify MPS backend
-python - <<EOF
-import torch
-print('MPS available:', torch.backends.mps.is_available())
-EOF
+python -c "import torch; print(torch.backends.mps.is_available())"
 ```
 
 ---
