@@ -1,0 +1,6 @@
+{
+  "model_name": "Qwen/Qwen3-8B",
+  "quantization_bits": 6,
+  "adapter_path": "adapters/text2hashtag_adapter.safetensors",
+  "num_layers": 8
+}

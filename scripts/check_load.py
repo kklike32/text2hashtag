@@ -1,6 +1,6 @@
 from mlx_lm import load, generate
 
-model, tokenizer = load("mlx-community/DeepSeek-R1-0528-Qwen3-8B-6bit")
+model, tokenizer = load("Qwen/Qwen3-8B-MLX-4bit")
 print("Loaded model & tokenizer OK")
 
 prompt = "Generate hashtags for: \"Just published my first open-source library!\""

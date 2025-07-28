@@ -1,18 +1,21 @@
-#!/usr/bin/env python3
 import argparse
 import subprocess
-import shlex
+import json
 
 def main():
+    # Load configuration
+    with open('../config.json', 'r') as f:
+        config = json.load(f)
+
     parser = argparse.ArgumentParser(
         description="Generate hashtags via the mlx_lm.generate CLI"
     )
     parser.add_argument(
-        "--model", default="mlx-community/DeepSeek-R1-0528-Qwen3-8B-6bit",
+        "--model", default=f"models/{config['model_name'].split('/')[-1]}-MLX-{config['quantization_bits']}bit",
         help="Hugging Face repo or local path to base quantized model"
     )
     parser.add_argument(
-        "--adapter-path", default="adapters/text2hashtag_adapter.safetensors",
+        "--adapter-path", default=config["adapter_path"],
         help="Path to the fine-tuned LoRA adapter weights"
     )
     parser.add_argument(
@@ -39,18 +42,6 @@ def main():
         "--top-k", type=int, dest="top_k", default=0,
         help="Top-k sampling"
     )
-    parser.add_argument(
-        "--seed", type=int, default=None,
-        help="Random seed for reproducibility"
-    )
-    parser.add_argument(
-        "--ignore-chat-template", action="store_true",
-        help="Use raw prompt without applying chat template"
-    )
-    parser.add_argument(
-        "--use-default-chat-template", action="store_true",
-        help="Force use of default chat template"
-    )
     args = parser.parse_args()
 
     # Build base prompt
@@ -59,9 +50,6 @@ def main():
         f'"{args.prompt}"\n'
         'Hashtags:'
     )
-
-    # Escape prompt for shell
-    escaped_prompt = shlex.quote(base_prompt)
 
     # Construct CLI command
     cmd = [
@@ -75,10 +63,6 @@ def main():
         '--min-p', str(args.min_p),
         '--top-k', str(args.top_k)
     ]
-    if args.ignore_chat_template:
-        cmd.append('--ignore-chat-template')
-    if args.use_default_chat_template:
-        cmd.append('--use-default-chat-template')
 
     # Run and capture output
     result = subprocess.run(cmd, capture_output=True, text=True)
